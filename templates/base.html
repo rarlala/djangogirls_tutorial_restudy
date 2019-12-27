@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/bootstrap/bootstrap.css">
+</head>
+<body>
+    <div id="wrap">
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
+        <a href="#" class="navbar-brand">DjangoGirls</a>
+
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a href="{% url 'post-list' %}" class="nav-link">Post List</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container-fluid pt-2">
+        {% block content %}{% endblock %}
+    </div>
+</div>
+</body>
+</html>
