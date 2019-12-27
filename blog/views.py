@@ -1,7 +1,7 @@
 import os
 
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.template import loader
 
 from blog.models import Post
@@ -28,8 +28,32 @@ def post_list(request):
 
     posts = Post.objects.all()
     context = {
-        'posts' : posts
+        'posts': posts
     }
 
     # [3번 방법]
     return render(request, 'post_list.html', context)
+
+
+def post_detail(request, pk):
+    # [1번 방법]
+    # try:
+    #     posts = Post.objects.filter(pk=pk)
+    #     post = posts[0]
+    # except:
+    #     return HttpResponse('없음')
+    #
+    # context = {
+    #     'post': post,
+    # }
+    #
+    # return render(request, 'post_detail.html', context)
+
+    # [2번 방법]
+    post = get_object_or_404(Post, pk=pk)
+
+    context = {
+        'post' : post
+    }
+
+    return render(request, 'post_detail.html', context)
