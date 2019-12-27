@@ -76,3 +76,16 @@ def post_add(request):
 
     else:
         return render(request, 'post_add.html')
+
+
+def post_delete(request, pk):
+    if request.method == 'POST':
+        Post.objects.filter(pk=pk).delete()
+        return redirect('post-list')
+    else:
+        post = get_object_or_404(Post, pk=pk)
+        context = {
+            'post': post
+        }
+        return render(request, 'post_delete.html', context)
+

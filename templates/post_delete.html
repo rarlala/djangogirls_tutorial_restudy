@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h3>정말로 이 글을 삭제하시겠습니까?</h3>
+            <br>
+            <ul>
+                <li>제목: {{post.title}}</li>
+                <li>작성날짜: {{post.created_date}}</li>
+            </ul>
+        </div>
+        <form action="{% url 'post-delete' pk=post.pk %}" method="POST">
+            {% csrf_token %}
+            <div class="ml-2 mb-2">
+                <button type="submit" class="btn btn-danger btn-sm">확인</button>
+                <a href="{% url 'post-list'%}" class="btn btn-primary btn-sm">취소</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}
