@@ -89,3 +89,21 @@ def post_delete(request, pk):
         }
         return render(request, 'post_delete.html', context)
 
+
+def post_edit(request, pk):
+    post = Post.objects.get(pk=pk)
+
+    if request.method == 'POST':
+        title = request.POST['title']
+        text = request.POST['text']
+
+        post.title = title
+        post.text = text
+        post.save()
+        return redirect('post-detail', pk=pk)
+
+    else:
+        context = {
+            'post': post
+        }
+        return render(request, 'post_edit.html', context)
