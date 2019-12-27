@@ -1,7 +1,7 @@
 import os
 
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.template import loader
 
 from blog.models import Post
@@ -26,7 +26,9 @@ def post_list(request):
     # content = loader.render_to_string('post_list.html', None, request)
     # return HttpResponse(content)
 
-    posts = Post.objects.all()
+    # posts = Post.objects.all()
+    posts = Post.objects.order_by('-pk')
+
     context = {
         'posts': posts
     }
@@ -57,3 +59,20 @@ def post_detail(request, pk):
     }
 
     return render(request, 'post_detail.html', context)
+
+
+def post_add(request):
+    if request.method == 'POST':
+        author = request.user
+        title = request.POST['title']
+        text = request.POST['text']
+
+        post = Post.objects.create(
+            title=title,
+            author=author,
+            text=text,
+        )
+        return redirect('post-list')
+
+    else:
+        return render(request, 'post_add.html')
