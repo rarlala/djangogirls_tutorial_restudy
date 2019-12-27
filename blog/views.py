@@ -3,6 +3,7 @@ import os
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import loader
+from django.utils import timezone
 
 from blog.models import Post
 
@@ -107,3 +108,17 @@ def post_edit(request, pk):
             'post': post
         }
         return render(request, 'post_edit.html', context)
+
+
+def post_publish(request, pk):
+    post = Post.objects.get(pk=pk)
+    post.published_date = timezone.now()
+    post.save()
+    return redirect('post-detail', pk=pk)
+
+
+def post_unpublish(request, pk):
+    post = Post.objects.get(pk=pk)
+    post.published_date = None
+    post.save()
+    return redirect('post-detail', pk=pk)

@@ -8,9 +8,25 @@
         <div class="text-left">
             <a href="{% url 'post-delete' pk=post.pk %}" class="btn btn-danger btn-sm">삭제</a>
             <a href="{% url 'post-edit' pk=post.pk %}" class="btn btn-info btn-sm">수정</a>
+            {% if post.published_date %}
+            <form action="{% url 'post-unpublish' pk=post.pk %}" method="POST">
+                {% csrf_token %}
+                <br>
+                <button type="submit" class="btn btn-warning btn-sm">발행취소</button>
+            </form>
+            {% else %}
+            <form action="{% url 'post-publish' pk=post.pk %}" method="POST">
+                {% csrf_token %}
+                <br>
+                <button type="submit" class="btn btn-info btn-sm">발행하기</button>
+            </form>
+            {% endif %}
         </div>
         <div class="text-right">
-            <span>{{ post.created_date }}</span>
+            <div>작성일 : {{ post.created_date }}</div>
+            {% if post.published_date %}
+                <div>발행일 : {{ post.published_date }}</div>
+            {% endif %}
         </div>
     </div>
 </div>
