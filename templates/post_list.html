@@ -2,13 +2,35 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/bootstrap/bootstrap.css">
     <title>postlist</title>
 </head>
 <body>
-{% for post in posts %}
-    <h2>{{post.title}}</h2>
-    <p>{{post.created_date}}</p>
-    <p>{{post.text}}</p>
-{% endfor %}
+<div id="wrap">
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
+        <a href="#" class="navbar-brand">DjangoGirls</a>
+
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Post List</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container-fluid pt-2">
+        {% for post in posts %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ post.title }}</h5>
+                <p class="card-text">{{ post.text|linebreaksbr|truncatechars:250}}</p>
+                <div class="text-right">
+                    <span>{{ post.created_date }}</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 </body>
 </html>
